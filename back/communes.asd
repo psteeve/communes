@@ -9,7 +9,7 @@
                (:file "src/utils"))
                
   :depends-on (
-               :st-utils :flot
+               :st-utils
                :dexador :jonathan
                :str :pathname :cl-fad
                :cl-markup
