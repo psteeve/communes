@@ -1,5 +1,16 @@
 (in-package :communes)
 
+(defclass person ()
+  (first-name
+   :initarg :first-name
+   :reader first-name)
+  (last-name
+   :initarg :last-name
+   :reader last-name)
+  (birth-date
+   :initarg :birth-date
+   :reader birth-date))
+
 (defclass city (bknr.datastore:store-object)
   ((population
     :initarg :population
@@ -25,7 +36,9 @@
     :reader wikipedia-link)
    (surface
     :initarg :surface
-    :reader surface))
+    :reader surface)
+   (maire :initarg :maire
+          :reader maire))
   (:metaclass bknr.datastore:persistent-class))
 
 (defmethod initialize-instance :after ((city city) &key)
@@ -88,7 +101,7 @@
                              :code-region (getf commune :|codeRegion|)
                              :code-departement (getf commune :|codeDepartement|)
                              :code-postaux (getf commune :|codesPostaux|)
-                             :surface (getf surface :|surface|)
+                             :surface (getf commune :|surface|)
                              :population (getf commune :|population|)))
           (jonathan:parse (dex:get *list-communes*))))
 

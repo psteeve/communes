@@ -14,7 +14,7 @@
 
 (defparameter *base-geo-api* "https://geo.api.gouv.fr")
 
-(defparameter *list-communes* (format nil "~a/communes?fields=surface" *base-geo-api*))
+(defparameter *list-communes* (format nil "~a/communes?fields=surface,codeDepartement,codeRegion,population" *base-geo-api*))
 
 (defparameter *base-directory* (uiop:native-namestring "~/.france/communes/"))
 
