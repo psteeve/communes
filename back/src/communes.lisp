@@ -1,42 +1,57 @@
 (in-package :communes)
 
-(defclass person ()
-  (first-name
-   :initarg :first-name
-   :reader first-name)
-  (last-name
-   :initarg :last-name
-   :reader last-name)
-  (birth-date
-   :initarg :birth-date
-   :reader birth-date))
+;; (defclass person ()
+;;   (first-name
+;;    :initarg :first-name
+;;    :reader first-name)
+;;   (last-name
+;;    :initarg :last-name
+;;    :reader last-name)
+;;   (birth-date
+;;    :initarg :birth-date
+;;    :reader birth-date))
 
 (defclass city (bknr.datastore:store-object)
   ((population
     :initarg :population
     :initform 0
     :reader population)
+
    (codes-postaux
     :initarg :code-postaux
     :reader codes-postaux)
+
    (code-departement
     :initarg :code-departement
+    :index-type bknr.indices:hash-index
+    :index-reader city-by-code-departement
+    :index-values all-code-departement
     :reader code-departement)
+
    (code
     :initarg :code
     :reader code)
+
    (code-region
     :initarg :code-region
     :reader code-region)
+
    (nom
     :initarg :nom
+    :index-initargs (:test #'equal)
+    :index-type bknr.indices:hash-index
+    :index-reader city-by-nom
+    :index-values all-cities
     :reader nom)
+
    (wikipedia-link
     :initarg wikipedia-link
     :reader wikipedia-link)
+
    (surface
     :initarg :surface
     :reader surface)
+
    (maire :initarg :maire
           :reader maire))
   (:metaclass bknr.datastore:persistent-class))
@@ -106,7 +121,7 @@
           (jonathan:parse (dex:get *list-communes*))))
 
 (defun list-communes ()
-  (bknr.datastore:all-store-objects))
+  (all-cities))
 
 (defun name-contains (item)
   (remove-if-not (lambda (commune)
