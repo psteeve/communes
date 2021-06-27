@@ -7,6 +7,8 @@
   (:export
    :start-server
    :stop-server
+   :nom
+   :maire
    :init)
   (:shadowing-import-from :common-lisp :get :delete))
 

@@ -1,16 +1,5 @@
 (in-package :communes)
 
-;; (defclass person ()
-;;   (first-name
-;;    :initarg :first-name
-;;    :reader first-name)
-;;   (last-name
-;;    :initarg :last-name
-;;    :reader last-name)
-;;   (birth-date
-;;    :initarg :birth-date
-;;    :reader birth-date))
-
 (defclass city (bknr.datastore:store-object)
   ((population
     :initarg :population
@@ -53,7 +42,9 @@
     :reader surface)
 
    (maire :initarg :maire
+          :initform nil
           :reader maire))
+
   (:metaclass bknr.datastore:persistent-class))
 
 (defmethod initialize-instance :after ((city city) &key)
@@ -100,7 +91,7 @@
       (write-key-value "surface" surface)
       (write-key-value "code" code))))
 
-(defun to-html (cities)
+(defun communes-to-html (cities)
   (cl-markup:markup
    (:ul
     (loop for city in cities
@@ -120,34 +111,43 @@
                              :population (getf commune :|population|)))
           (jonathan:parse (dex:get *list-communes*))))
 
-(defun list-communes ()
+(defun communes ()
   (all-cities))
 
 (defun name-contains (item)
   (remove-if-not (lambda (commune)
                    (str:containsp item (nom commune)))
-                 (list-communes)))
+                 (communes)))
 
 (defun city-of-more-than (population)
   (remove-if-not
    #'(lambda (commune)
        (and (population commune)
             (> (population commune) population)))
-   (list-communes)))
+   (communes)))
 
 (defun city-of-less-than (population)
   (remove-if-not
    #'(lambda (commune)
        (and (population commune)
             (< (population commune) population)))
-   (list-communes)))
+   (communes)))
 
+(defun code-departements ()
+  (let ((deps nil))
+    (loop for city in (communes)
+          when (not (equal (code-departement city) :|nil|))
+            do
+               (setf deps (adjoin (code-departement city) deps)))
+    deps))
+    
 (defmethod print-object ((city city) stream)
   (with-slots (
                nom population
-               code-departement)
+               maire code-departement)
       city
     (format stream
-            "#<nom: ~a population: ~a 
+            "#<nom: ~a population: ~a
+:maire ~a
             code-departement: ~a>"
-            nom population code-departement)))
+            nom population maire code-departement)))
