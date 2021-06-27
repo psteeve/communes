@@ -140,7 +140,7 @@
             do
                (setf deps (adjoin (code-departement city) deps)))
     deps))
-    
+
 (defmethod print-object ((city city) stream)
   (with-slots (
                nom population
