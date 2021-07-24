@@ -41,6 +41,11 @@
     :initarg :surface
     :reader surface)
 
+   (website
+    :initarg :website
+    :initform nil
+    :reader website)
+
    (maire :initarg :maire
           :initform nil
           :reader maire))
@@ -144,10 +149,11 @@
 (defmethod print-object ((city city) stream)
   (with-slots (
                nom population
-               maire code-departement)
+               maire code-departement
+               website)
       city
     (format stream
             "#<nom: ~a population: ~a
 :maire ~a
-            code-departement: ~a>"
-            nom population maire code-departement)))
+            code-departement: ~a website: ~a>"
+            nom population maire code-departement website)))

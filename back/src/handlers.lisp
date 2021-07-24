@@ -6,7 +6,6 @@
   (setf (hunchentoot:content-type*) "application/json")
   (jonathan:to-json (name-contains name)))
 
-
 (hunchentoot:define-easy-handler (communes-html-handler
                                   :uri *api-communes-html*)
     ((name :init-form ""))
