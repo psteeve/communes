@@ -15,4 +15,8 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public onSearch($event: any) {
+    const value = $event.target.value;
+    this.change.emit(value);    
+  }
 }

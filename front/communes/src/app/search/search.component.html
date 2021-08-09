@@ -4,7 +4,7 @@
 >
     <mat-label>Les communes françaises</mat-label>
     <input
-        (input)="change.emit($event)"
+        (change)="onSearch($event)"
         matInput
         type="search"
     >

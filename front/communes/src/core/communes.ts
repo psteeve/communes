@@ -8,6 +8,8 @@ export interface Commune {
     wikipediaLink: string
 }
 
-export function communes() {
-    return fetch('/api/v1/communes').then(data => data.json());
+export function communes(search = '') {
+    const url = `/api/v1/communes?search=${search}`
+    
+    return fetch(url).then(data => data.json());
 }

@@ -6,5 +6,6 @@
         <p *ngIf="commune.codeDepartement">Departement {{ commune?.codeDepartement }}</p>
         <p *ngIf="commune.population">Population {{ commune?.population }}</p>
         <p *ngIf="commune.surface">Surface {{ commune?.surface }}</p>
+        <p *ngIf="commune.wikipediaLink"><a target="_blank" [href]="commune?.wikipediaLink">{{ commune.nom }}</a></p>
     </mat-card-content>
 </mat-card>

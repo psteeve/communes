@@ -11,34 +11,37 @@ import { Commune, communes } from 'src/core/communes';
 export class AppComponent implements OnInit, OnDestroy {
   public global: Record<string, any>;
   public communes$: BehaviorSubject<ReadonlyArray<Commune>> = new BehaviorSubject([] as ReadonlyArray<Commune>);
-  
-  public communeSubscription: Subscription;
-  
+
+  public communeSubscription: Subscription = null as unknown as Subscription;
+
   constructor() {
 
     this.global = window as unknown as Record<string, any>;
     this.global.communes = communes;
-
-    this.communeSubscription = this.getCommunes().
-    pipe(tap(data => {
-      this.communes$.next(data);
-    }))
-    .subscribe();
   }
-  
+
   ngOnInit() {
-    
+
   }
 
   ngOnDestroy() {
-    this.communeSubscription.unsubscribe();
+    this.communeSubscription?.unsubscribe();
   }
 
-  public getCommunes() {
-    return from(communes());
+  public getCommunes(search: string) {
+    return from(communes(search));
   }
 
-  onSearchCommunes(value: string) {
-    console.log(value);
+  onSearchCommunes(value: any) {
+    if (value?.isTrusted || value === '') {
+      return;
+    }
+    
+    this.communeSubscription = this.getCommunes(value).
+      pipe(tap(data => {
+        this.communes$.next(data);
+      }))
+      .subscribe();
   }
+
 }
