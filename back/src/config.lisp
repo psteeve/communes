@@ -25,8 +25,8 @@
 
 (defparameter *server-port* 9341)
 
-(defvar *api-communes* "/api/communes")
-(defvar *api-communes-html* "/api/communes/html")
+(defvar *api-communes* "/api/v1/communes")
+(defvar *api-communes-html* "/api/v1/communes/html")
 
 (defvar *front-directory* (format nil "~afront/" *base-directory*))
 
