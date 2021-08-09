@@ -1,0 +1,10 @@
+<mat-card *ngFor="let commune of communes">
+    <mat-card-header>
+        <mat-card-title>{{commune.nom}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p *ngIf="commune.codeDepartement">Departement {{ commune?.codeDepartement }}</p>
+        <p *ngIf="commune.population">Population {{ commune?.population }}</p>
+        <p *ngIf="commune.surface">Surface {{ commune?.surface }}</p>
+    </mat-card-content>
+</mat-card>
